@@ -9,29 +9,36 @@
 #include <stdlib.h>
 #include <string.h>
 
-enum tlv8_types : uint8_t {
-  HAP_Param_Value = 0x01,
-  HAP_Param_Additional_Authorization_Data = 0x02,
-  HAP_Param_Origin = 0x03,
-  HAP_Param_Characteristic_Type = 0x04,
-  HAP_Param_Characteristic_Instance_ID = 0x05,
-  HAP_Param_Service_Type = 0x06,
-  HAP_Param_Service_Instance_ID = 0x07,
-  HAP_Param_TTL = 0x08,
-  HAP_Param_Return_Response = 0x09,
-  HAP_Param_HAP_Characteristic_Properties_Descriptor = 0x0A,
-  HAP_Param_GATT_User_Description_Descriptor = 0x0B,
-  HAP_Param_GATT_Presentation_Format_Descriptor = 0x0C,
-  HAP_Param_GATT_Valid_Range = 0x0D,
-  HAP_Param_HAP_Step_Value_Descriptor = 0x0E,
-  HAP_Param_HAP_Service_Properties = 0x0F,
-  HAP_Param_HAP_Linked_Services = 0x10,
-  HAP_Param_HAP_Valid_Values_Descriptor = 0x11,
-  HAP_Param_HAP_Valid_Values_Range_Descriptor = 0x12
-};
+#define HAP_OP_CODE_Characteristic_Signature_Read 0x01
+#define HAP_OP_CODE_Characteristic_Write 0x02
+#define HAP_OP_CODE_Characteristic_Read 0x03
+#define HAP_OP_CODE_Characteristic_Timed_Write 0x04
+#define HAP_OP_CODE_Characteristic_Execute_Write 0x05
+#define HAP_OP_CODE_Service_Signature_Read 0x06
+#define HAP_OP_CODE_Characteristic_Configuration 0x07
+#define HAP_OP_CODE_Protocol_Configuration 0x08
+
+#define HAP_Param_Value 0x01
+#define HAP_Param_Additional_Authorization_Data 0x02
+#define HAP_Param_Origin 0x03
+#define HAP_Param_Characteristic_Type 0x04
+#define HAP_Param_Characteristic_Instance_ID 0x05
+#define HAP_Param_Service_Type 0x06
+#define HAP_Param_Service_Instance_ID 0x07
+#define HAP_Param_TTL 0x08
+#define HAP_Param_Return_Response 0x09
+#define HAP_Param_HAP_Characteristic_Properties_Descriptor 0x0A
+#define HAP_Param_GATT_User_Description_Descriptor 0x0B
+#define HAP_Param_GATT_Presentation_Format_Descriptor 0x0C
+#define HAP_Param_GATT_Valid_Range 0x0D
+#define HAP_Param_HAP_Step_Value_Descriptor 0x0E
+#define HAP_Param_HAP_Service_Properties 0x0F
+#define HAP_Param_HAP_Linked_Services 0x10
+#define HAP_Param_HAP_Valid_Values_Descriptor 0x11
+#define HAP_Param_HAP_Valid_Values_Range_Descriptor 0x12
 
 typedef struct {
-  enum tlv8_types type;
+  uint8_t type; // see HAP_Param_* defs for values
   uint8_t length;
   char *data;
 } tlv8;
@@ -65,17 +72,6 @@ uint16_t read_tlv8_array(char *data, uint16_t data_length, tlv8 **result) {
   return i;
 }
 
-enum hap_op_code : uint8_t {
-  HAP_Characteristic_Signature_Read = 0x01,
-  HAP_Characteristic_Write = 0x02,
-  HAP_Characteristic_Read = 0x03,
-  HAP_Characteristic_Timed_Write = 0x04,
-  HAP_Characteristic_Execute_Write = 0x05,
-  HAP_Service_Signature_Read = 0x06,
-  HAP_Characteristic_Configuration = 0x07,
-  HAP_Protocol_Configuration = 0x08
-};
-
 typedef struct {
   unsigned int fragment : 1; // 0 - first fragment (or no fragmentation at all),
                              // 1 - continuation
@@ -94,7 +90,7 @@ typedef struct {
 
 typedef struct {
   pdu_control_field control;
-  enum hap_op_code op_code;
+  uint8_t op_code; // see HAP_OP_CODE_* defs for values
   uint8_t tid;
   uint16_t char_id;
   pdu_body body;
