@@ -1,0 +1,12 @@
+.pio
+.vscode
+.idea
+cmake-*
+*.cmake
+*.cbp
+Makefile
+**/CMakeFiles
+**/CMakeCache.txt
+*.a
+test/test
+build
