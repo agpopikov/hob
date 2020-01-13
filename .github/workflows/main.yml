@@ -7,8 +7,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Some CI debug stuff
-        run: ls -lah . && ls -lah ../
+      - uses: actions/checkout@v2
       - name: Run cmake
         run: cmake .
       - name: Build project
