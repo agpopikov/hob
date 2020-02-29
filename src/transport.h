@@ -9,40 +9,36 @@
 #include <stdlib.h>
 #include <string.h>
 
-enum OpCode : uint8_t {
-    Characteristic_Signature_Read = 0x01,
-    Characteristic_Write = 0x02,
-    Characteristic_Read = 0x03,
-    Characteristic_Timed_Write = 0x04,
-    Characteristic_Execute_Write = 0x05,
-    Service_Signature_Read = 0x06,
-    Characteristic_Configuration = 0x07,
-    Protocol_Configuration = 0x08
-};
+#define HAP_OP_CODE_Characteristic_Signature_Read 0x01
+#define HAP_OP_CODE_Characteristic_Write 0x02
+#define HAP_OP_CODE_Characteristic_Read 0x03
+#define HAP_OP_CODE_Characteristic_Timed_Write 0x04
+#define HAP_OP_CODE_Characteristic_Execute_Write 0x05
+#define HAP_OP_CODE_Service_Signature_Read 0x06
+#define HAP_OP_CODE_Characteristic_Configuration 0x07
+#define HAP_OP_CODE_Protocol_Configuration 0x08
 
-enum Params : uint8_t {
-    Value = 0x01,
-    Additional_Authorization_Data = 0x02,
-    Origin = 0x03,
-    Characteristic_Type = 0x04,
-    Characteristic_Instance_ID = 0x05,
-    Service_Type = 0x06,
-    Service_Instance_ID = 0x07,
-    TTL = 0x08,
-    Return_Response = 0x09,
-    HAP_Characteristic_Properties_Descriptor = 0x0A,
-    GATT_User_Description_Descriptor = 0x0B,
-    GATT_Presentation_Format_Descriptor = 0x0C,
-    GATT_Valid_Range = 0x0D,
-    HAP_Step_Value_Descriptor = 0x0E,
-    HAP_Service_Properties = 0x0F,
-    HAP_Linked_Services = 0x10,
-    HAP_Valid_Values_Descriptor = 0x11,
-    HAP_Valid_Values_Range_Descriptor = 0x12
-};
+#define HAP_Param_Value 0x01
+#define HAP_Param_Additional_Authorization_Data 0x02
+#define HAP_Param_Origin 0x03
+#define HAP_Param_Characteristic_Type 0x04
+#define HAP_Param_Characteristic_Instance_ID 0x05
+#define HAP_Param_Service_Type 0x06
+#define HAP_Param_Service_Instance_ID 0x07
+#define HAP_Param_TTL 0x08
+#define HAP_Param_Return_Response 0x09
+#define HAP_Param_HAP_Characteristic_Properties_Descriptor 0x0A
+#define HAP_Param_GATT_User_Description_Descriptor 0x0B
+#define HAP_Param_GATT_Presentation_Format_Descriptor 0x0C
+#define HAP_Param_GATT_Valid_Range 0x0D
+#define HAP_Param_HAP_Step_Value_Descriptor 0x0E
+#define HAP_Param_HAP_Service_Properties 0x0F
+#define HAP_Param_HAP_Linked_Services 0x10
+#define HAP_Param_HAP_Valid_Values_Descriptor 0x11
+#define HAP_Param_HAP_Valid_Values_Range_Descriptor 0x12
 
 typedef struct {
-    enum Params type; // see HAP_Param_* defs for values
+    uint8_t type; // see HAP_Param_* defs for values
     uint8_t length;
     char *data;
 } tlv8;
@@ -94,7 +90,7 @@ typedef struct {
 
 typedef struct {
     pdu_control_field control;
-    enum OpCode op_code; // see HAP_OP_CODE_* defs for values
+    uint8_t op_code; // see HAP_OP_CODE_* defs for values
     uint8_t tid;
     uint16_t char_id;
     pdu_body body;
